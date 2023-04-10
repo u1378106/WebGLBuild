@@ -4,6 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 	<title>SkiingGame</title>
 	<style>
 		html,
@@ -75,12 +76,13 @@
 					w = window.innerWidth;
 					h = window.innerHeight;
 
-					var r = 1600 / 900;
+					var r = 9 / 16;
 
-					if (w * r > window.innerHeight) {
+					if (w * r > h) {
 						w = Math.min(w, Math.ceil(h / r));
+					} else {
+						h = Math.floor(w * r);
 					}
-					h = Math.floor(w * r);
 				} else {
 					w = 900;
 					h = 1600;
