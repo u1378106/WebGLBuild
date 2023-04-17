@@ -67,30 +67,33 @@
 				canvas.style.backgroundSize = '100% 1rem';
 			}
 			function onResize() {
-				var container = canvas.parentElement;
-				var w;
-				var h;
+    var container = canvas.parentElement;
+    var w;
+    var h;
 
-				if (scaleToFit) {
-					w = window.innerWidth;
-					h = window.innerHeight;
+    if (scaleToFit) {
+        var viewportWidth = window.innerWidth;
+        var viewportHeight = window.innerHeight;
+        var aspectRatio = 1600 / 900;
 
-					var r = 1600 / 900;
+        // Calculate the new width and height based on the aspect ratio
+        if (viewportWidth / viewportHeight < aspectRatio) {
+            w = viewportWidth;
+            h = viewportWidth / aspectRatio;
+        } else {
+            w = viewportHeight * aspectRatio;
+            h = viewportHeight;
+        }
+    } else {
+        w = 1600;
+        h = 900;
+    }
 
-					if (w * r > window.innerHeight) {
-						w = Math.min(w, Math.ceil(h / r));
-					}
-					h = Math.floor(w * r);
-				} else {
-					w = 900;
-					h = 1600;
-				}
-
-				container.style.width = canvas.style.width = w + "px";
-				container.style.height = canvas.style.height = h + "px";
-				container.style.top = Math.floor((window.innerHeight - h) / 2) + "px";
-				container.style.left = Math.floor((window.innerWidth - w) / 2) + "px";
-			}
+    container.style.width = canvas.style.width = w + "px";
+    container.style.height = canvas.style.height = h + "px";
+    container.style.top = Math.floor((window.innerHeight - h) / 2) + "px";
+    container.style.left = Math.floor((window.innerWidth - w) / 2) + "px";
+}
 			createUnityInstance(canvas, config, progressHandler).then(function (instance) {
 				canvas = instance.Module.canvas;
 				onResize();
